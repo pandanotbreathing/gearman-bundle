@@ -1,0 +1,3 @@
+horrible_gearman_homepage:
+    path:     /
+    defaults: { _controller: HorribleGearmanBundle:Default:index }

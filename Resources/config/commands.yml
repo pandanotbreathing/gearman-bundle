@@ -1,0 +1,7 @@
+services:
+    horrible.command.worker:
+        class: Horrible\GearmanBundle\Command\WorkerCommand
+        arguments:
+            - '@horrible.gearman.worker'
+        tags:
+            - { name: 'console.command' }

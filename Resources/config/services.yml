@@ -1,0 +1,34 @@
+imports:
+    - { resource: events.yml }
+    - { resource: commands.yml }
+
+services:
+    horrible.gearman.configurator:
+        class: Horrible\GearmanBundle\Configurator\GearmanConfigurator
+        arguments:
+            - '%horrible_gearman.servers%'
+
+    horrible.gearman.jobs.manager:
+        class: Horrible\GearmanBundle\Job\JobsManager
+        arguments:
+            - '@horrible.event_dispatcher'
+            - '%horrible_gearman.retries%'
+
+    horrible.gearman.worker.raw:
+        class: GearmanWorker
+
+    horrible.gearman.worker:
+        class: Horrible\GearmanBundle\Worker\Worker
+        arguments:
+            - '@horrible.gearman.worker.raw'
+            - '@horrible.gearman.jobs.manager'
+            - '@horrible.gearman.configurator'
+
+    horrible.gearman.client.raw:
+        class: GearmanClient
+
+    horrible.gearman.client:
+        class: Horrible\GearmanBundle\Client\Client
+        arguments:
+            - '@horrible.gearman.client.raw'
+            - '@horrible.gearman.configurator'
