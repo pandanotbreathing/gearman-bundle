@@ -35,6 +35,13 @@ class JobsManager
     protected $retries = self::DEFAULT_RETRIES;
 
     /**
+     * Worker which processed current jobsManager
+     *
+     * @var string
+     */
+    protected $workerId;
+
+    /**
      * @param EventDispatcherInterface $dispatcher
      * @param int $retries
      */
@@ -50,6 +57,14 @@ class JobsManager
     public function addJob(JobInterface $job)
     {
         $this->jobs[$job->getName()] = $job;
+    }
+
+    /**
+     * @param string $workerId
+     */
+    public function setWorkerId($workerId)
+    {
+        $this->workerId = $workerId;
     }
 
     /**
@@ -104,7 +119,7 @@ class JobsManager
     {
         $this->eventDispatcher->dispatch(
             JobStartedEvent::EVENT_NAME,
-            new JobStartedEvent($jobName, $workload)
+            new JobStartedEvent($jobName, $workload, $this->workerId)
         );
     }
 
@@ -117,7 +132,7 @@ class JobsManager
     {
         $this->eventDispatcher->dispatch(
             JobFailedEvent::EVENT_NAME,
-            new JobFailedEvent($jobName, $workload, $exception)
+            new JobFailedEvent($jobName, $workload, $exception, $this->workerId)
         );
     }
 
@@ -130,7 +145,7 @@ class JobsManager
     {
         $this->eventDispatcher->dispatch(
             JobFinishedEvent::EVENT_NAME,
-            new JobFinishedEvent($jobName, $workload, $jobResult)
+            new JobFinishedEvent($jobName, $workload, $jobResult, $this->workerId)
         );
     }
 
