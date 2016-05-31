@@ -101,7 +101,7 @@
     $this->get('horrible.gearman.client')->doBackground('your:job:name', $workload);
     ```
 
-    Workload data would be encoded as json (in case of SimpleWorkload usage) and passed to Gearman, and you would get
+    Workload data will be encoded as json (in case of SimpleWorkload usage) and passed to Gearman, and you will get
     it as WorkloadInterface instance in your Job->execute method
 
     Mainly all 'horrible.gearman.client' methods are the same as in the GearmanClient (http://php.net/manual/ru/class.gearmanclient.php)
@@ -115,22 +115,22 @@
 
 Bundle has several types of events:
 
-- **JobStartedEvent ('horrible.event.job.started')** - fires before job has been started, contains inside
-        - $jobName (string)
-        - $workload (WorkloadInterface instance)
-        - $workerId (string) - worker id which is processing current job
+- **JobStartedEvent ('horrible.event.job.started')** - fired before job has been started, contains:
+    - $jobName (string)
+    - $workload (WorkloadInterface instance)
+    - $workerId (string) - worker id which is processing current job
 
-- **JobFinishedEvent ('horrible.event.job.finished')** - fires after successfully finished job, contains inside
-        - $jobName (string)
-        - $workload (WorkloadInterface instance)
-        - $jobResult (mixed) - data which is returned from the Job->execute() method
-        - $workerId (string) - worker id which is processing current job
+- **JobFinishedEvent ('horrible.event.job.finished')** - fired after successfully finished job, contains:
+    - $jobName (string)
+    - $workload (WorkloadInterface instance)
+    - $jobResult (mixed) - data which is returned from the Job->execute() method
+    - $workerId (string) - worker id which is processing current job
 
-- **JobFailedEvent ('horrible.event.job.failed')** - fires before job has been started, contains inside
-        - $jobName (string)
-        - $workload (WorkloadInterface instance)
-        - $exception (object) - Exception instance which was thrown out of the job
-        - $workerId (string) - worker id which is processing current job
+- **JobFailedEvent ('horrible.event.job.failed')** - fired before job has been started, contains:
+    - $jobName (string)
+    - $workload (WorkloadInterface instance)
+    - $exception (object) - Exception instance which was thrown out of the job
+    - $workerId (string) - worker id which is processing current job
 
 
 To catch these events you should use tags:
