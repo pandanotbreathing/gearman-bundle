@@ -115,18 +115,18 @@
 
 Bundle has several types of events:
 
-- JobStartedEvent ('horrible.event.job.started') - fires before job has been started, contains inside
+- **JobStartedEvent ('horrible.event.job.started')** - fires before job has been started, contains inside
         - $jobName (string)
         - $workload (WorkloadInterface instance)
         - $workerId (string) - worker id which is processing current job
 
-- JobFinishedEvent ('horrible.event.job.finished') - fires after successfully finished job, contains inside
+- **JobFinishedEvent ('horrible.event.job.finished')** - fires after successfully finished job, contains inside
         - $jobName (string)
         - $workload (WorkloadInterface instance)
         - $jobResult (mixed) - data which is returned from the Job->execute() method
         - $workerId (string) - worker id which is processing current job
 
-- JobFailedEvent ('horrible.event.job.failed') - fires before job has been started, contains inside
+- **JobFailedEvent ('horrible.event.job.failed')** - fires before job has been started, contains inside
         - $jobName (string)
         - $workload (WorkloadInterface instance)
         - $exception (object) - Exception instance which was thrown out of the job
