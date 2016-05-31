@@ -8,7 +8,7 @@ install:
   - composer install --prefer-dist
 
 script:
-  - $TRAVIS_BUILD_DIR/vendor/bin/phpcs --standard=psr2 --extensions=php $TRAVIS_BUILD_DIR/
+  - $TRAVIS_BUILD_DIR/vendor/bin/phpcs --standard=psr2 --extensions=php --ignore=$TRAVIS_BUILD_DIR/vendor/ $TRAVIS_BUILD_DIR/
   - $TRAVIS_BUILD_DIR/vendor/bin/phpunit $TRAVIS_BUILD_DIR/
 
 matrix:
