@@ -5,7 +5,7 @@ php:
   - 7.0
 
 install:
-  - composer install --prefer-dist
+  - composer install --prefer-source
 
 script:
   - $TRAVIS_BUILD_DIR/vendor/bin/phpcs --standard=psr2 --extensions=php --ignore=$TRAVIS_BUILD_DIR/vendor/ $TRAVIS_BUILD_DIR/
