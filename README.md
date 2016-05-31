@@ -3,112 +3,112 @@
 
 ## Configuration
 
-1. Add following configuration to your config.yml:
+1. **Add following configuration to your config.yml:**
 
-```
-horrible_gearman: 
-    servers: 
-        - { host: '127.0.0.1' } 
-        - { host: '127.0.0.1', port: '47031' } 
-    retries: 3
-```
+    ```
+    horrible_gearman: 
+        servers: 
+            - { host: '127.0.0.1' } 
+            - { host: '127.0.0.1', port: '47031' } 
+        retries: 3
+    ```
 
-- servers - an array of the gearman servers, you can ignore 'port' field, gearman's default port will be used.
-- retries - amount of retries if exception would be thrown from Job
+    - servers - an array of the gearman servers, you can ignore 'port' field, gearman's default port will be used.
+    - retries - amount of retries if exception would be thrown from Job
 
-2. Add bundle initialization to the app/AppKernel.php
+2. **Add bundle initialization to the app/AppKernel.php**
 
-```
-class AppKernel extends Kernel
-{
-    public function registerBundles()
+    ```
+    class AppKernel extends Kernel
     {
-        $bundles = [
-            ...
-            new Horrible\GearmanBundle\HorribleGearmanBundle(),
-        ];
+        public function registerBundles()
+        {
+            $bundles = [
+                ...
+                new Horrible\GearmanBundle\HorribleGearmanBundle(),
+            ];
+        }
+        ...
     }
-    ...
-}
-```
+    ```
 
-3. Create your own Job implemeting JobInterface. It's important to give your job name (so you can access your job
-through client using this job name). Also implement your 'execute' method where you can get WorkloadInterface instance.
+3. **Create your own Job implemeting JobInterface. It's important to give your job name (so you can access your job
+    through client using this job name). Also implement your 'execute' method where you can get WorkloadInterface instance.**
 
-```
-<?php
+    ```
+    <?php
 
-namespace AppBundle\Job;
+    namespace AppBundle\Job;
 
-use Horrible\GearmanBundle\Job\JobInterface;
-use Horrible\GearmanBundle\Workload\WorkloadInterface;
+    use Horrible\GearmanBundle\Job\JobInterface;
+    use Horrible\GearmanBundle\Workload\WorkloadInterface;
 
-class Job implements JobInterface
-{
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(WorkloadInterface $workload)
+    class Job implements JobInterface
     {
-        $data = $workload->getDecodedData();
-        //do your stuff
+        /**
+         * {@inheritDoc}
+         */
+        public function execute(WorkloadInterface $workload)
+        {
+            $data = $workload->getDecodedData();
+            //do your stuff
+        }
+
+        public function getName()
+        {
+            return 'your:job:name';
+        }
     }
+    ```
 
-    public function getName()
-    {
-        return 'your:job:name';
-    }
-}
-```
+4. **Register your Job as a service and add tag with the name **'horrible.gearman.job'** to it**
 
-4. Register your Job as a service and add tag with the name **'horrible.gearman.job'** to it
+    **services.yml**
+    ```
+    services:
+        your.job:
+            class: AppBundle\Job\Job
+            tags:
+                - { name: 'horrible.gearman.job' }
+    ```
 
-**services.yml**
-```
-services:
-    your.job:
-        class: AppBundle\Job\Job
-        tags:
-            - { name: 'horrible.gearman.job' }
-```
+5. **Start workers**
 
-5. Start workers
-
-To have workers started you should call command **'horrible:worker:work'**.
-If you have to have your worker started in background you could do:
+    To have workers started you should call command **'horrible:worker:work'**.
+    If you have to have your worker started in background you could do:
 
 
-Symfony < 3 version
-```
-php app/console horrible:worker:work &
-```
+    Symfony < 3 version
+    ```
+    php app/console horrible:worker:work &
+    ```
 
-Symfony >= 3 version
-```
-php bin/console horrible:worker:work &
-```
+    Symfony >= 3 version
+    ```
+    php bin/console horrible:worker:work &
+    ```
 
-6. Add a task through client
+6. **Add a task through client**
 
-**SomeController.php**
-```
-$workload = new SimpleWorkload();
-$workload->setDecodedData([
-    'some your data' => 'value',
-    ...
-]);
+    **SomeController.php**
+    ```
+    $workload = new SimpleWorkload();
+    $workload->setDecodedData([
+        'some your data' => 'value',
+        ...
+    ]);
 
-$this->get('horrible.gearman.client')->doBackground('your:job:name', $workload);
-```
+    $this->get('horrible.gearman.client')->doBackground('your:job:name', $workload);
+    ```
 
-Workload data would be encoded as json (in case of SimpleWorkload usage) and passed to Gearman, and you would get
-it as WorkloadInterface instance in your Job->execute method
+    Workload data would be encoded as json (in case of SimpleWorkload usage) and passed to Gearman, and you would get
+    it as WorkloadInterface instance in your Job->execute method
 
-Mainly all 'horrible.gearman.client' methods are the same as in the GearmanClient (http://php.net/manual/ru/class.gearmanclient.php)
-but instead of workload as a string it uses WorkloadInterface instance
+    Mainly all 'horrible.gearman.client' methods are the same as in the GearmanClient (http://php.net/manual/ru/class.gearmanclient.php)
+    but instead of workload as a string it uses WorkloadInterface instance
 
-**Workload** is not required parameter, if you'd skip it you'll get WorkloadInterface instance in your job which
-will have '0' inside as a value
+    **Workload** is not required parameter, if you'd skip it you'll get WorkloadInterface instance in your job which
+    will have '0' inside as a value
 
 
 ## Events
