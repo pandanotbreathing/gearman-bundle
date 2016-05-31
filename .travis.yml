@@ -8,8 +8,8 @@ install:
   - composer install --prefer-dist
 
 script:
-  - vendor/bin/phpcs --standard=psr2 --extensions=php ./
-  - vendor/bin/phpunit ./
+  - vendor/bin/phpcs --standard=psr2 --extensions=php .
+  - vendor/bin/phpunit .
 
 matrix:
   allow_failures:
