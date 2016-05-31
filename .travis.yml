@@ -8,8 +8,8 @@ install:
   - composer install --prefer-dist
 
 script:
-  - vendor/bin/phpcs --standard=psr2 --extensions=php .
-  - vendor/bin/phpunit .
+  - vendor/bin/phpcs --standard=psr2 --extensions=php {$TRAVIS_BUILD_DIR}/
+  - vendor/bin/phpunit {$TRAVIS_BUILD_DIR}/
 
 matrix:
   allow_failures:
