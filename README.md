@@ -61,7 +61,7 @@
     }
     ```
 
-4. **Register your Job as a service and add tag with the name **'horrible.gearman.job'** to it**
+4. **Register your Job as a service and add tag with the name _'horrible.gearman.job'_ to it**
 
     **services.yml**
     ```
