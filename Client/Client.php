@@ -38,9 +38,9 @@ class Client
      * @param string|null $uniqueId
      * @return string
      */
-    public function doHigh($functionName, WorkloadInterface $workload, $uniqueId = null)
+    public function doHigh($functionName, WorkloadInterface $workload = null, $uniqueId = null)
     {
-        return $this->gearmanClient->doHigh($functionName, $workload->getEncodedData(), $uniqueId);
+        return $this->gearmanClient->doHigh($functionName, $this->getWorkloadEncodedData($workload), $uniqueId);
     }
 
     /**
@@ -49,9 +49,9 @@ class Client
      * @param string|null $uniqueId
      * @return string
      */
-    public function doNormal($functionName, WorkloadInterface $workload, $uniqueId = null)
+    public function doNormal($functionName, WorkloadInterface $workload = null, $uniqueId = null)
     {
-        return $this->gearmanClient->doNormal($functionName, $workload->getEncodedData(), $uniqueId);
+        return $this->gearmanClient->doNormal($functionName, $this->getWorkloadEncodedData($workload), $uniqueId);
     }
 
     /**
@@ -60,9 +60,9 @@ class Client
      * @param string|null $uniqueId
      * @return string
      */
-    public function doLow($functionName, WorkloadInterface $workload, $uniqueId = null)
+    public function doLow($functionName, WorkloadInterface $workload = null, $uniqueId = null)
     {
-        return $this->gearmanClient->doLow($functionName, $workload->getEncodedData(), $uniqueId);
+        return $this->gearmanClient->doLow($functionName, $this->getWorkloadEncodedData($workload), $uniqueId);
     }
 
     /**
@@ -87,9 +87,9 @@ class Client
      * @param string|null $uniqueId
      * @return string
      */
-    public function doBackground($functionName, WorkloadInterface $workload, $uniqueId = null)
+    public function doBackground($functionName, WorkloadInterface $workload = null, $uniqueId = null)
     {
-        return $this->gearmanClient->doBackground($functionName, $workload->getEncodedData(), $uniqueId);
+        return $this->gearmanClient->doBackground($functionName, $this->getWorkloadEncodedData($workload), $uniqueId);
     }
 
     /**
@@ -98,9 +98,13 @@ class Client
      * @param string|null $uniqueId
      * @return string
      */
-    public function doHighBackground($functionName, WorkloadInterface $workload, $uniqueId = null)
+    public function doHighBackground($functionName, WorkloadInterface $workload = null, $uniqueId = null)
     {
-        return $this->gearmanClient->doHighBackground($functionName, $workload->getEncodedData(), $uniqueId);
+        return $this->gearmanClient->doHighBackground(
+            $functionName,
+            $this->getWorkloadEncodedData($workload),
+            $uniqueId
+        );
     }
 
     /**
@@ -109,9 +113,13 @@ class Client
      * @param string|null $uniqueId
      * @return string
      */
-    public function doLowBackground($functionName, WorkloadInterface $workload, $uniqueId = null)
+    public function doLowBackground($functionName, WorkloadInterface $workload = null, $uniqueId = null)
     {
-        return $this->gearmanClient->doLowBackground($functionName, $workload->getEncodedData(), $uniqueId);
+        return $this->gearmanClient->doLowBackground(
+            $functionName,
+            $this->getWorkloadEncodedData($workload),
+            $uniqueId
+        );
     }
 
     /**
@@ -130,9 +138,9 @@ class Client
      * @param string|null $uniqueId
      * @return mixed
      */
-    public function addTask($functionName, WorkloadInterface $workload, $context = null, $uniqueId = null)
+    public function addTask($functionName, WorkloadInterface $workload = null, $context = null, $uniqueId = null)
     {
-        return $this->addTask($functionName, $workload->getEncodedData(), $context, $uniqueId);
+        return $this->addTask($functionName, $this->getWorkloadEncodedData($workload), $context, $uniqueId);
     }
 
     /**
@@ -142,9 +150,9 @@ class Client
      * @param string|null $uniqueId
      * @return mixed
      */
-    public function addTaskHigh($functionName, WorkloadInterface $workload, $context = null, $uniqueId = null)
+    public function addTaskHigh($functionName, WorkloadInterface $workload = null, $context = null, $uniqueId = null)
     {
-        return $this->addTaskHigh($functionName, $workload->getEncodedData(), $context, $uniqueId);
+        return $this->addTaskHigh($functionName, $this->getWorkloadEncodedData($workload), $context, $uniqueId);
     }
 
     /**
@@ -154,9 +162,9 @@ class Client
      * @param string|null $uniqueId
      * @return mixed
      */
-    public function addTaskLow($functionName, WorkloadInterface $workload, $context = null, $uniqueId = null)
+    public function addTaskLow($functionName, WorkloadInterface $workload = null, $context = null, $uniqueId = null)
     {
-        return $this->addTaskLow($functionName, $workload->getEncodedData(), $context, $uniqueId);
+        return $this->addTaskLow($functionName, $this->getWorkloadEncodedData($workload), $context, $uniqueId);
     }
 
     /**
@@ -166,9 +174,13 @@ class Client
      * @param string|null $uniqueId
      * @return mixed
      */
-    public function addTaskBackground($functionName, WorkloadInterface $workload, $context = null, $uniqueId = null)
-    {
-        return $this->addTaskBackground($functionName, $workload->getEncodedData(), $context, $uniqueId);
+    public function addTaskBackground(
+        $functionName,
+        WorkloadInterface $workload = null,
+        $context = null,
+        $uniqueId = null
+    ) {
+        return $this->addTaskBackground($functionName, $this->getWorkloadEncodedData($workload), $context, $uniqueId);
     }
 
     /**
@@ -178,9 +190,18 @@ class Client
      * @param string|null $uniqueId
      * @return mixed
      */
-    public function addTaskHighBackground($functionName, WorkloadInterface $workload, $context = null, $uniqueId = null)
-    {
-        return $this->addTaskHighBackground($functionName, $workload->getEncodedData(), $context, $uniqueId);
+    public function addTaskHighBackground(
+        $functionName,
+        WorkloadInterface $workload = null,
+        $context = null,
+        $uniqueId = null
+    ) {
+        return $this->addTaskHighBackground(
+            $functionName,
+            $this->getWorkloadEncodedData($workload),
+            $context,
+            $uniqueId
+        );
     }
 
     /**
@@ -190,9 +211,18 @@ class Client
      * @param string|null $uniqueId
      * @return mixed
      */
-    public function addTaskLowBackground($functionName, WorkloadInterface $workload, $context = null, $uniqueId = null)
-    {
-        return $this->addTaskLowBackground($functionName, $workload->getEncodedData(), $context, $uniqueId);
+    public function addTaskLowBackground(
+        $functionName,
+        WorkloadInterface $workload = null,
+        $context = null,
+        $uniqueId = null
+    ) {
+        return $this->addTaskLowBackground(
+            $functionName,
+            $this->getWorkloadEncodedData($workload),
+            $context,
+            $uniqueId
+        );
     }
 
     /**
@@ -291,5 +321,18 @@ class Client
     public function runTasks()
     {
         return $this->runTasks();
+    }
+
+    /**
+     * @param WorkloadInterface $workload
+     * @return string
+     */
+    protected function getWorkloadEncodedData(WorkloadInterface $workload = null)
+    {
+        if (!$workload instanceof WorkloadInterface || !$workload->getEncodedData()) {
+            return 0;
+        }
+
+        return $workload->getEncodedData();
     }
 }
