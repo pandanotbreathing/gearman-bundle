@@ -66,4 +66,3 @@ class SimpleWorkload implements WorkloadInterface
         $this->encodedData = json_encode($this->decodedData);
     }
 }
-

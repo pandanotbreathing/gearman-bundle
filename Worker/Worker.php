@@ -46,7 +46,8 @@ class Worker
     public function work()
     {
         $this->registerJobs();
-        while ($this->gearmanWorker->work());
+        while ($this->gearmanWorker->work()) {
+        }
     }
 
     /**
