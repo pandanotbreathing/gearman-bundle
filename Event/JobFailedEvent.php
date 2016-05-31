@@ -29,15 +29,22 @@ class JobFailedEvent extends Event
     protected $exception;
 
     /**
+     * @var null|string
+     */
+    protected $workerId;
+
+    /**
      * @param string $jobName
      * @param WorkloadInterface $workload
      * @param \Exception $exception
+     * @param string|null $workerId
      */
-    public function __construct($jobName, WorkloadInterface $workload, \Exception $exception)
+    public function __construct($jobName, WorkloadInterface $workload, \Exception $exception, $workerId = null)
     {
         $this->jobName = $jobName;
         $this->workload = $workload;
         $this->exception = $exception;
+        $this->workerId = $workerId;
     }
 
     /**
@@ -62,5 +69,13 @@ class JobFailedEvent extends Event
     public function getException()
     {
         return $this->exception;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWorkerId()
+    {
+        return $this->workerId;
     }
 }
