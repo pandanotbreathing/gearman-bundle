@@ -13,6 +13,11 @@ use Horrible\GearmanBundle\Job\JobsManager;
 class Worker
 {
     /**
+     * @var string
+     */
+    protected $id;
+
+    /**
      * @var GearmanWorker
      */
     protected $gearmanWorker;
@@ -41,6 +46,8 @@ class Worker
         $this->jobsManager = $jobsManager;
         $this->configurator = $configurator;
         $this->configurator->configure($this->gearmanWorker);
+        $this->generateId();
+        $this->setJobsManagerWorkerId();
     }
 
     public function work()
@@ -56,5 +63,21 @@ class Worker
     protected function registerJobs()
     {
         $this->jobsManager->registerJobs($this->gearmanWorker);
+    }
+
+    /**
+     * Generates worker id
+     */
+    protected function generateId()
+    {
+        $this->id = uniqid();
+    }
+
+    /**
+     * Sets current worker id to the jobs manager
+     */
+    protected function setJobsManagerWorkerId()
+    {
+        $this->jobsManager->setWorkerId($this->id);
     }
 }

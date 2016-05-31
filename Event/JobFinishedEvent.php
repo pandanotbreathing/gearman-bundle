@@ -29,15 +29,22 @@ class JobFinishedEvent extends Event
     protected $jobResult;
 
     /**
+     * @var null|string
+     */
+    protected $workerId;
+
+    /**
      * @param string $jobName
      * @param WorkloadInterface $workload
      * @param mixed $jobResult
+     * @param string|null $workerId
      */
-    public function __construct($jobName, WorkloadInterface $workload, $jobResult)
+    public function __construct($jobName, WorkloadInterface $workload, $jobResult, $workerId = null)
     {
         $this->jobName = $jobName;
         $this->workload = $workload;
         $this->jobResult = $jobResult;
+        $this->workerId = $workerId;
     }
 
     /**
@@ -62,5 +69,13 @@ class JobFinishedEvent extends Event
     public function getJobResult()
     {
         return $this->jobResult;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWorkerId()
+    {
+        return $this->workerId;
     }
 }

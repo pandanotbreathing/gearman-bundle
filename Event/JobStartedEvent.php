@@ -24,13 +24,20 @@ class JobStartedEvent extends Event
     protected $workload;
 
     /**
+     * @var null|string
+     */
+    protected $workerId;
+
+    /**
      * @param string $jobName
      * @param WorkloadInterface $workload
+     * @param string|null $workerId
      */
-    public function __construct($jobName, WorkloadInterface $workload)
+    public function __construct($jobName, WorkloadInterface $workload, $workerId = null)
     {
         $this->jobName = $jobName;
         $this->workload = $workload;
+        $this->workerId = $workerId;
     }
 
     /**
@@ -47,5 +54,13 @@ class JobStartedEvent extends Event
     public function getWorkload()
     {
         return $this->workload;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWorkerId()
+    {
+        return $this->workerId;
     }
 }
