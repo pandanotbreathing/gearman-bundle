@@ -1,6 +1,8 @@
 # Horrible Gearman Bundle Documentation
 
-![Travis Build Status](https://travis-ci.org/pandanotbreathing/gearman-bundle.svg?branch=feature%2Ftravis)
+![Travis Build Status](https://travis-ci.org/pandanotbreathing/gearman-bundle.svg?branch=feature%2Ftravis)()
+
+[![Coverage Status](https://coveralls.io/repos/github/pandanotbreathing/gearman-bundle/badge.svg?branch=development)](https://coveralls.io/github/pandanotbreathing/gearman-bundle?branch=development)
 
 ## Configuration
 
