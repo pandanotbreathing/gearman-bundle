@@ -9,7 +9,7 @@ install:
 
 script:
   - $TRAVIS_BUILD_DIR/vendor/bin/phpcs --standard=psr2 --extensions=php --ignore=$TRAVIS_BUILD_DIR/vendor/ $TRAVIS_BUILD_DIR/
-  - $TRAVIS_BUILD_DIR/vendor/bin/phpunit $TRAVIS_BUILD_DIR/
+  - $TRAVIS_BUILD_DIR/vendor/bin/phpunit
 
 matrix:
   allow_failures:
