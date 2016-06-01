@@ -1,5 +1,6 @@
 # Horrible Gearman Bundle Documentation
 
+![Travis Build Status](https://travis-ci.org/pandanotbreathing/gearman-bundle.svg?branch=feature%2Ftravis)
 
 ## Configuration
 
@@ -129,7 +130,7 @@ Bundle has several types of events:
 - **JobFailedEvent ('horrible.event.job.failed')** - fired before job has been started, contains:
     - $jobName (string)
     - $workload (WorkloadInterface instance)
-    - $exception (object) - Exception instance which was thrown out of the job
+    - $exception (object) - Exception instance that was thrown out of the job
     - $workerId (string) - worker id which is processing current job
 
 
