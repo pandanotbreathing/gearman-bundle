@@ -9,7 +9,11 @@ install:
 
 script:
   - $TRAVIS_BUILD_DIR/vendor/bin/phpcs --standard=psr2 --extensions=php --ignore=$TRAVIS_BUILD_DIR/vendor/ $TRAVIS_BUILD_DIR/
-  - $TRAVIS_BUILD_DIR/vendor/bin/phpunit
+  - mkdir -p build/logs
+  - $TRAVIS_BUILD_DIR/vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php vendor/bin/coveralls -v
 
 matrix:
   allow_failures:
