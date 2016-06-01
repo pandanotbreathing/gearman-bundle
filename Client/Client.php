@@ -4,6 +4,7 @@ namespace Horrible\GearmanBundle\Client;
 
 use Horrible\GearmanBundle\Configurator\GearmanConfigurator;
 use Horrible\GearmanBundle\Workload\WorkloadInterface;
+use GearmanClient;
 
 /**
  * Class Client
@@ -25,7 +26,7 @@ class Client
      * @param \GearmanClient $gearmanClient
      * @param GearmanConfigurator $configurator
      */
-    public function __construct(\GearmanClient $gearmanClient, GearmanConfigurator $configurator)
+    public function __construct(GearmanClient $gearmanClient, GearmanConfigurator $configurator)
     {
         $this->gearmanClient = $gearmanClient;
         $this->gearmanConfigurator = $configurator;
@@ -140,7 +141,12 @@ class Client
      */
     public function addTask($functionName, WorkloadInterface $workload = null, $context = null, $uniqueId = null)
     {
-        return $this->addTask($functionName, $this->getWorkloadEncodedData($workload), $context, $uniqueId);
+        return $this->gearmanClient->addTask(
+            $functionName,
+            $this->getWorkloadEncodedData($workload),
+            $context,
+            $uniqueId
+        );
     }
 
     /**
@@ -152,7 +158,12 @@ class Client
      */
     public function addTaskHigh($functionName, WorkloadInterface $workload = null, $context = null, $uniqueId = null)
     {
-        return $this->addTaskHigh($functionName, $this->getWorkloadEncodedData($workload), $context, $uniqueId);
+        return $this->gearmanClient->addTaskHigh(
+            $functionName,
+            $this->getWorkloadEncodedData($workload),
+            $context,
+            $uniqueId
+        );
     }
 
     /**
@@ -164,7 +175,12 @@ class Client
      */
     public function addTaskLow($functionName, WorkloadInterface $workload = null, $context = null, $uniqueId = null)
     {
-        return $this->addTaskLow($functionName, $this->getWorkloadEncodedData($workload), $context, $uniqueId);
+        return $this->gearmanClient->addTaskLow(
+            $functionName,
+            $this->getWorkloadEncodedData($workload),
+            $context,
+            $uniqueId
+        );
     }
 
     /**
@@ -180,7 +196,12 @@ class Client
         $context = null,
         $uniqueId = null
     ) {
-        return $this->addTaskBackground($functionName, $this->getWorkloadEncodedData($workload), $context, $uniqueId);
+        return $this->gearmanClient->addTaskBackground(
+            $functionName,
+            $this->getWorkloadEncodedData($workload),
+            $context,
+            $uniqueId
+        );
     }
 
     /**
@@ -196,7 +217,7 @@ class Client
         $context = null,
         $uniqueId = null
     ) {
-        return $this->addTaskHighBackground(
+        return $this->gearmanClient->addTaskHighBackground(
             $functionName,
             $this->getWorkloadEncodedData($workload),
             $context,
@@ -217,7 +238,7 @@ class Client
         $context = null,
         $uniqueId = null
     ) {
-        return $this->addTaskLowBackground(
+        return $this->gearmanClient->addTaskLowBackground(
             $functionName,
             $this->getWorkloadEncodedData($workload),
             $context,
@@ -232,7 +253,7 @@ class Client
      */
     public function addTaskStatus($jobHandle, $context = null)
     {
-        return $this->addTaskStatus($jobHandle, $context);
+        return $this->gearmanClient->addTaskStatus($jobHandle, $context);
     }
 
     /**
@@ -241,7 +262,7 @@ class Client
      */
     public function setWorkloadCallback($callback)
     {
-        return $this->setWorkloadCallback($callback);
+        return $this->gearmanClient->setWorkloadCallback($callback);
     }
 
     /**
@@ -250,7 +271,7 @@ class Client
      */
     public function setCreatedCallback($callback)
     {
-        return $this->setCreatedCallback($callback);
+        return $this->gearmanClient->setCreatedCallback($callback);
     }
 
     /**
@@ -259,7 +280,7 @@ class Client
      */
     public function setDataCallback($callback)
     {
-        return $this->setDataCallback($callback);
+        return $this->gearmanClient->setDataCallback($callback);
     }
 
     /**
@@ -268,7 +289,7 @@ class Client
      */
     public function setWarningCallback($callback)
     {
-        return $this->setWarningCallback($callback);
+        return $this->gearmanClient->setWarningCallback($callback);
     }
 
     /**
@@ -277,7 +298,7 @@ class Client
      */
     public function setStatusCallback($callback)
     {
-        return $this->setStatusCallback($callback);
+        return $this->gearmanClient->setStatusCallback($callback);
     }
 
     /**
@@ -286,7 +307,7 @@ class Client
      */
     public function setCompleteCallback($callback)
     {
-        return $this->setCompleteCallback($callback);
+        return $this->gearmanClient->setCompleteCallback($callback);
     }
 
     /**
@@ -295,7 +316,7 @@ class Client
      */
     public function setExceptionCallback($callback)
     {
-        return $this->setExceptionCallback($callback);
+        return $this->gearmanClient->setExceptionCallback($callback);
     }
 
     /**
@@ -304,7 +325,7 @@ class Client
      */
     public function setFailCallback($callback)
     {
-        return $this->setFailCallback($callback);
+        return $this->gearmanClient->setFailCallback($callback);
     }
 
     /**
@@ -312,7 +333,7 @@ class Client
      */
     public function clearCallbacks()
     {
-        return $this->clearCallbacks();
+        return $this->gearmanClient->clearCallbacks();
     }
 
     /**
@@ -320,7 +341,7 @@ class Client
      */
     public function runTasks()
     {
-        return $this->runTasks();
+        return $this->gearmanClient->runTasks();
     }
 
     /**
